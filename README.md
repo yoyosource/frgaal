@@ -66,7 +66,7 @@ See "Preview Features" section below for more details.
 Usage with Maven
 ----------------
 
-To use this compiler, specify following in your `pom.xml` file build section:
+To use this compiler, specify following in your `pom.xml file build section:
 
 ```xml
 <build>
@@ -79,7 +79,7 @@ To use this compiler, specify following in your `pom.xml` file build section:
                 <dependency>
                     <groupId>org.frgaal</groupId>
                     <artifactId>compiler-maven-plugin</artifactId>
-                    <version>16.0.0</version>
+                    <version>15.0.0</version>
                 </dependency>
             </dependencies>
             <configuration>
@@ -104,9 +104,54 @@ to some newer version. However, until you do that, no matter what
 breaking changes appear in the JDK, your project is still going to compile
 into exactly the same `.class` files.
 
+Usage with Gradle DSL style
+-----------------
+
+You need gradle 6.8.x to be able to use this compiler.
+To use this compiler, specify following in your `build.gradle` file:
+
+```groovy
+plugins {
+    id 'java'
+    id 'org.frgaal.compiler'
+}
+
+targetCompatibility = '1.8'
+sourceCompatibility = '15'
+
+compileJava {
+    options.compilerArgs << '-Xlint:deprecation' << '--enable-preview'
+}
+
+compileTestJava {
+    options.compilerArgs << '-Xlint:deprecation' << '--enable-preview'
+}
+```
+
+To be able to resolve the frgaal compiler plugin you need to specifiy the following in your `settings.gradle` file, at the top:
+
+```groovy
+pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.namespace == 'org.frgaal') {
+                useModule('org.frgaal:compiler-gradle-plugin:<Version>')
+            }
+        }
+    }
+    repositories {
+        maven {
+            url 'https://mvnrepository.com/artifact/org.frgaal'
+        }
+        gradlePluginPortal()
+    }
+}
+```
+
 Usage with Gradle
 -----------------
 
+You need gradle 6.8.x to be able to use this compiler.
 To use this compiler, specify following in your `build.gradle` file:
 
 ```groovy
@@ -115,7 +160,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.frgaal:compiler-gradle-plugin:15.0.0"
+        classpath "org.frgaal:compiler-gradle-plugin:<Version>"
     }
 }
 
@@ -160,7 +205,7 @@ Preview Features
 ----------------
 
 Frgaal compiler supports _preview features_ of the Java language. Certain
-_preview features_ can be used with `--target 1.8`. Namely:
+_preview features_ can be used with `-target 1.8`. Namely:
 
 * `instanceof Type variableName`
 
@@ -205,9 +250,9 @@ Caveats
 
 The current caveats include:
 
- * module-info.java cannot be compiled with `--target 8`
- * the records preview feature, introduced in Java 14, can only be used with `--target 15`
- * the sealed classes preview feature, introduced in Java 15, can only be used with `--target 15`
+ * module-info.java cannot be compiled with `-target 8`
+ * the records preview feature, introduced in Java 14, can only be used with `-target 15`
+ * the sealed classes preview feature, introduced in Java 15, can only be used with `-target 15`
 
 Building
 --------
