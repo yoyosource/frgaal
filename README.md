@@ -66,7 +66,7 @@ See "Preview Features" section below for more details.
 Usage with Maven
 ----------------
 
-To use this compiler, specify following in your `pom.xml file build section:
+To use this compiler, specify following in your `pom.xml` file build section:
 
 ```xml
 <build>
@@ -79,7 +79,7 @@ To use this compiler, specify following in your `pom.xml file build section:
                 <dependency>
                     <groupId>org.frgaal</groupId>
                     <artifactId>compiler-maven-plugin</artifactId>
-                    <version>15.0.0</version>
+                    <version>16.0.0</version>
                 </dependency>
             </dependencies>
             <configuration>
@@ -205,7 +205,7 @@ Preview Features
 ----------------
 
 Frgaal compiler supports _preview features_ of the Java language. Certain
-_preview features_ can be used with `-target 1.8`. Namely:
+_preview features_ can be used with `--target 1.8`. Namely:
 
 * `instanceof Type variableName`
 
@@ -250,9 +250,9 @@ Caveats
 
 The current caveats include:
 
- * module-info.java cannot be compiled with `-target 8`
- * the records preview feature, introduced in Java 14, can only be used with `-target 15`
- * the sealed classes preview feature, introduced in Java 15, can only be used with `-target 15`
+ * module-info.java cannot be compiled with `--target 8`
+ * the records preview feature, introduced in Java 14, can only be used with `--target 15`
+ * the sealed classes preview feature, introduced in Java 15, can only be used with `--target 15`
 
 Building
 --------
